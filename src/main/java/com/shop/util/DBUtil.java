@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUtil {
-    private static final String URL = "jdbc:mysql://localhost:3306/mysneakershop";
+    private static final String URL = "jdbc:mysql://localhost:3306/store";
     private static final String USER = "root";
     private static final String PASS = "123456"; // đổi theo mật khẩu của bạn
 

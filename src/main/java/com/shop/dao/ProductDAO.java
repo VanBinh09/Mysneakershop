@@ -16,10 +16,10 @@ public class ProductDAO {
             while (rs.next()) {
                 Product p = new Product();
                 p.setId(rs.getInt("id"));
-                p.setName(rs.getString("tensp"));
-                p.setDescription(rs.getString("mota"));
-                p.setPrice(rs.getBigDecimal("dongia"));
-                p.setImage(rs.getString("anhsp"));
+                p.setName(rs.getString("name"));
+                p.setDescription(rs.getString("description"));
+                p.setPrice(rs.getBigDecimal("price"));
+                p.setImage(rs.getString("image"));
                 list.add(p);
             }
         } catch (SQLException e) { e.printStackTrace(); }

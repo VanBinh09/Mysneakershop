@@ -33,7 +33,8 @@
     <% for (Product p : products) { %>
     <div class="col-md-4 mb-4">
       <div class="card h-100 shadow-sm">
-        <img src="<%= p.getImage() %>" class="card-img-top" alt="Sản phẩm" style="height:250px;object-fit:cover;">
+        <img src="images/<%= p.getImage() %>" class="card-img-top" alt="<%= p.getName() %>"
+             style="height: 250px; object-fit: cover;">
         <div class="card-body">
           <h5 class="card-title"><%= p.getName() %></h5>
           <p class="card-text text-muted"><%= p.getDescription() %></p>
