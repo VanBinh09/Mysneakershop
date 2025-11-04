@@ -54,3 +54,5 @@ INSERT INTO products (name, price, image, description) VALUES
     ('Giày Sneaker Trắng', 550000.00, 'giay-trang.jpg', 'Giày thể thao trẻ trung, năng động.'),
     ('Túi Xách Nữ', 350000.00, 'tui-xach.jpg', 'Túi xách thời trang cao cấp.'),
    ('Quần Jean Nam', 320000.00, 'quan-jean.lpg', 'Quần jean slimfit co giãn.');
+
+SELECT * FROM users;

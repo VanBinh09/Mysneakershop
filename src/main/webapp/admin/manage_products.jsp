@@ -14,8 +14,8 @@
     response.sendRedirect("../login.jsp");
     return;
   }
-  ProductDAO dao = new ProductDAO();
-  List<Product> list = dao.getAll();
+
+
 %>
 <!DOCTYPE html>
 <html>

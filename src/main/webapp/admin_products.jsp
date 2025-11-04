@@ -6,10 +6,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*,com.shop.model.Product" %>
+<%@ page import="java.util.*,com.shop.model.Product,com.shop.model.User" %>
 <%
+    User user = (User) session.getAttribute("user");
+    if (user == null || !"ADMIN".equals(user.getRole())) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
     List<Product> products = (List<Product>) request.getAttribute("products");
 %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -19,7 +26,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h3 class="mb-3 text-center">Quản lý sản phẩm</h3>
+    <h3 class="text-center mb-3">QUẢN LÝ SẢN PHẨM</h3>
     <a href="product_form.jsp" class="btn btn-success mb-3">+ Thêm sản phẩm</a>
 
     <table class="table table-bordered text-center align-middle">
@@ -39,13 +46,13 @@
         <tr>
             <td><%= p.getId() %></td>
             <td><%= p.getName() %></td>
-            <td><%= p.getPrice() %></td>
-            <td><img src="<%= p.getImage() %>" style="width:80px;height:80px;object-fit:cover;"></td>
+            <td><%= String.format("%,.0f VND", p.getPrice()) %></td>
+            <td><img src="images/<%= p.getImage() %>" width="80" height="80" style="object-fit:cover;"></td>
             <td><%= p.getDescription() %></td>
             <td>
                 <a href="products?action=edit&id=<%= p.getId() %>" class="btn btn-warning btn-sm">Sửa</a>
                 <a href="products?action=delete&id=<%= p.getId() %>" class="btn btn-danger btn-sm"
-                   onclick="return confirm('Xóa sản phẩm này?');">Xóa</a>
+                   onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
             </td>
         </tr>
         <% } } else { %>

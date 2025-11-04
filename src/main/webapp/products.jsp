@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Hi
-  Date: 10/28/2025
-  Time: 8:02 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*,com.shop.model.Product,com.shop.model.User" %>
 <%
@@ -15,6 +8,7 @@
     return;
   }
 %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -39,7 +33,7 @@
           <h5 class="card-title"><%= p.getName() %></h5>
           <p class="card-text text-muted"><%= p.getDescription() %></p>
           <p class="fw-bold text-danger">
-            <%= p.getPrice() != null ? String.format("%,.0f VND", p.getPrice()) : "0 VND" %>
+            <%= String.format("%,.0f VND", p.getPrice()) %>
           </p>
         </div>
       </div>

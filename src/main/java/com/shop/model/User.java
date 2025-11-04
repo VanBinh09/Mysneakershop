@@ -7,16 +7,6 @@ public class User {
     private String role;
     private String email;
 
-    public User() {}
-
-    public User(int id, String username, String password, String role, String email) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.email = email;
-    }
-
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

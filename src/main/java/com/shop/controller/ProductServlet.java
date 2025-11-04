@@ -2,69 +2,82 @@ package com.shop.controller;
 
 import com.shop.dao.ProductDAO;
 import com.shop.model.Product;
-import javax.servlet.*;
+import com.shop.model.User;
+import com.shop.util.DBUtil;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.util.List;
 
-@WebServlet(name = "ProductServlet", value = "/products")
+@WebServlet(name ="ProductServlet" ,value = "/products")
 public class ProductServlet extends HttpServlet {
-    private ProductDAO dao;
 
     @Override
-    public void init() { dao = new ProductDAO(); }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Connection conn = DBUtil.getConnection();
+        ProductDAO dao = new ProductDAO(conn);
 
         String action = req.getParameter("action");
-        if ("delete".equals(action)) {
-            int id = Integer.parseInt(req.getParameter("id"));
-            dao.delete(id);
-            resp.sendRedirect(req.getContextPath() + "/admin_products.jsp");
-            return;
-        } else if ("edit".equals(action)) {
-            int id = Integer.parseInt(req.getParameter("id"));
-            Product p = dao.findById(id);
-            req.setAttribute("editProduct", p);
-            req.getRequestDispatcher("/product_form.jsp").forward(req, resp);
-            return;
-        }
+        if (action == null) action = "list";
 
-        List<Product> products = dao.getAllProducts();
-        req.setAttribute("products", products);
-        req.getRequestDispatcher("products.jsp").forward(req, resp);
+        switch (action) {
+            case "edit":
+                int idEdit = Integer.parseInt(req.getParameter("id"));
+                req.setAttribute("product", dao.getProductById(idEdit));
+                req.getRequestDispatcher("product_form.jsp").forward(req, resp);
+                break;
+
+            case "delete":
+                int idDel = Integer.parseInt(req.getParameter("id"));
+                dao.deleteProduct(idDel);
+                resp.sendRedirect("products?action=admin");
+                break;
+
+            case "admin":
+                List<Product> listAdmin = dao.getAllProducts();
+                req.setAttribute("products", listAdmin);
+                req.getRequestDispatcher("admin_products.jsp").forward(req, resp);
+                break;
+
+            default:
+                List<Product> list = dao.getAllProducts();
+                req.setAttribute("products", list);
+                req.getRequestDispatcher("products.jsp").forward(req, resp);
+                break;
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Connection conn = DBUtil.getConnection();
+        ProductDAO dao = new ProductDAO(conn);
 
-        String idStr = req.getParameter("id");
+        String id = req.getParameter("id");
         String name = req.getParameter("name");
-        String priceStr = req.getParameter("price");
+        double price = Double.parseDouble(req.getParameter("price"));
         String image = req.getParameter("image");
         String description = req.getParameter("description");
 
-        BigDecimal price = new BigDecimal(priceStr.isEmpty() ? "0" : priceStr);
+        Product p = new Product();
+        p.setName(name);
+        p.setPrice(BigDecimal.valueOf(price));
+        p.setImage(image);
+        p.setDescription(description);
 
-        if (idStr == null || idStr.isEmpty()) {
-            dao.create(new Product(0, name, price, image, description));
+        if (id == null || id.isEmpty()) {
+            dao.insertProduct(p);
         } else {
-            int id = Integer.parseInt(idStr);
-            Product p = dao.findById(id);
-            if (p != null) {
-                p.setName(name);
-                p.setPrice(price);
-                p.setImage(image);
-                p.setDescription(description);
-                dao.update(p);
-            }
+            p.setId(Integer.parseInt(id));
+            dao.updateProduct(p);
         }
-        resp.sendRedirect(req.getContextPath() + "/admin_products.jsp");
+
+        resp.sendRedirect("products?action=admin");
     }
 }
