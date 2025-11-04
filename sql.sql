@@ -45,14 +45,15 @@ CREATE TABLE order_items (
 
 -- ✅ Dữ liệu mẫu: tài khoản admin và user
 INSERT INTO users (username, password, role, email) VALUES
-                                                        ('admin', '123', 'ADMIN', 'admin@gmail.com'),
-                                                        ('bin', '12', 'USER', 'user@gmail.com');
+   ('admin', '123', 'ADMIN', 'admin@gmail.com'),
+   ('bin', '12', 'USER', 'user@gmail.com');
 
 -- ✅ Dữ liệu mẫu: sản phẩm
 INSERT INTO products (name, price, image, description) VALUES
-   ('Áo Thun Nam Basic', 150000.00, 'ao-thun.jpg', 'Áo thun nam chất cotton mềm mịn.'),
-    ('Giày Sneaker Trắng', 550000.00, 'giay-trang.jpg', 'Giày thể thao trẻ trung, năng động.'),
-    ('Túi Xách Nữ', 350000.00, 'tui-xach.jpg', 'Túi xách thời trang cao cấp.'),
-   ('Quần Jean Nam', 320000.00, 'quan-jean.lpg', 'Quần jean slimfit co giãn.');
+        ('Áo Thun Nam Basic', 150000.00, 'ao-thun.jpg', 'Áo thun nam chất cotton mềm mịn.'),
+        ('Giày Sneaker Trắng', 550000.00, 'giay-trang.jpg', 'Giày thể thao trẻ trung, năng động.'),
+        ('Túi Xách Nữ', 350000.00, 'tui-xach.jpg', 'Túi xách thời trang cao cấp.'),
+        ('Quần Jean Nam', 320000.00, 'quan-jean.jpg', 'Quần jean slimfit co giãn.');
+
 
 SELECT * FROM users;
