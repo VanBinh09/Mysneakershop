@@ -5,10 +5,12 @@
   Time: 8:40 PM
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*,com.shop.model.Product,com.shop.model.User" %>
+
 <%
-    User user = (User) session.getAttribute("user");
+    User user = (User) session.getAttribute("username");
     if (user == null || !"ADMIN".equals(user.getRole())) {
         response.sendRedirect("login.jsp");
         return;

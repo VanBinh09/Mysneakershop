@@ -23,6 +23,7 @@
   <% if (products == null || products.isEmpty()) { %>
   <p class="text-center text-muted">Không có sản phẩm nào để hiển thị.</p>
   <% } else { %>
+
   <div class="row">
     <% for (Product p : products) { %>
     <div class="col-md-4 mb-4">
@@ -35,6 +36,7 @@
           <p class="fw-bold text-danger">
             <%= String.format("%,.0f VND", p.getPrice()) %>
           </p>
+          <a href="product-detail?id=<%= p.getId() %>" class="btn btn-outline-dark btn-sm">Xem chi tiết</a>
         </div>
       </div>
     </div>

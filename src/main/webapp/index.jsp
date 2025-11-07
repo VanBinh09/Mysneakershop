@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.shop.model.User" %>
+<%
+    User user = (User) session.getAttribute("user");
+    String username = null;
+    String role = null;
+    if (user != null) {
+        username = user.getUsername();
+        role = user.getRole();
+    }
+%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -12,17 +22,26 @@
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.jsp">MySneakerShop</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbarNav" class="collapse navbar-collapse">
+        <a class="navbar-brand" href="index.jsp">MySneakerShop</a>
+        <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a href="index.jsp" class="nav-link active">Trang chủ</a></li>
-                <li class="nav-item"><a href="products.jsp" class="nav-link">Sản phẩm</a></li>
-                <li class="nav-item"><a href="login.jsp" class="nav-link">Đăng ký</a></li>
+
+                <% if (username == null) { %>
+                <!-- Khi chưa đăng nhập -->
+                <li class="nav-item"><a href="register.jsp" class="nav-link">Đăng ký</a></li>
                 <li class="nav-item"><a href="login.jsp" class="nav-link">Đăng nhập</a></li>
-                <li class="nav-item"><a href="products.jsp" class="nav-link">Liên hệ</a></li>
+
+                <% } else if ("admin".equalsIgnoreCase(role)) { %>
+                <!-- Khi đăng nhập bằng admin -->
+                <li class="nav-item"><a href="admin" class="nav-link">Quản lý</a></li>
+                <li class="nav-item"><a href="index.jsp" class="nav-link text-warning">Trang chủ</a></li>
+                <li class="nav-item"><a href="logout.jsp" class="nav-link text-danger">Đăng xuất</a></li>
+
+                <% } else { %>
+                <!-- Khi đăng nhập bằng user -->
+                <li class="nav-item"><a href="profile.jsp" class="nav-link">Tài khoản</a></li>
+                <li class="nav-item"><a href="logout.jsp" class="nav-link text-danger">Đăng xuất</a></li>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -45,21 +64,21 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="feature-card p-4 shadow-sm rounded">
-                    <img src="images/free-shipping.jpg" class="mb-3" width="100">
+                    <img src="images/free-shipping.jpg" class="mb-3" width="200">
                     <h5>Giao hàng miễn phí</h5>
                     <p>Miễn phí vận chuyển toàn quốc cho đơn hàng trên 500k.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="feature-card p-4 shadow-sm rounded">
-                    <img src="images/verified.jpg" class="mb-3" width="100">
+                    <img src="images/verified.jpg" class="mb-3" width="200">
                     <h5>Cam kết chính hãng</h5>
                     <p>100% sản phẩm được nhập trực tiếp từ thương hiệu uy tín.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="feature-card p-4 shadow-sm rounded">
-                    <img src="images/support.jpg" class="mb-3" width="100">
+                    <img src="images/support.jpg" class="mb-3" width="200">
                     <h5>Hỗ trợ tận tâm</h5>
                     <p>Đội ngũ CSKH luôn sẵn sàng hỗ trợ bạn 24/7.</p>
                 </div>
