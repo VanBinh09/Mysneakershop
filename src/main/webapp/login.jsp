@@ -1,32 +1,44 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Đăng nhập</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-light">
-<div class="container mt-5" style="max-width: 400px;">
-  <h3 class="text-center mb-4">Đăng nhập</h3>
-  <% if (request.getAttribute("error") != null) { %>
-  <div class="alert alert-danger"><%= request.getAttribute("error") %></div>
-  <% } %>
-  <% if (request.getParameter("success") != null) { %>
-  <div class="alert alert-success">Đăng ký thành công, mời đăng nhập!</div>
-  <% } %>
-  <form action="login" method="post">
-    <div class="mb-3">
-      <label class="form-label">Tên đăng nhập</label>
-      <input type="text" name="username" class="form-control" required>
+
+<body>
+
+<jsp:include page="/WEB-INF/header.jsp"/>
+
+<div class="container">
+
+  <form class="form" method="post" action="login">
+    <h2>Đăng nhập</h2>
+
+    <c:if test="${not empty error}">
+      <div style="color:red">${error}</div>
+    </c:if>
+
+    <label>Tài khoản</label>
+    <input type="text" name="username" required>
+
+    <label>Mật khẩu</label>
+    <input type="password" name="password" required>
+
+    <button class="btn primary block">Đăng nhập</button>
+
+    <div style="margin-top:8px">
+      Chưa có tài khoản?
+      <a href="register.jsp">Đăng ký</a>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Mật khẩu</label>
-      <input type="password" name="password" class="form-control" required>
-    </div>
-    <button class="btn btn-primary w-100">Đăng nhập</button>
-    <p class="mt-3 text-center">Chưa có tài khoản? <a href="register.jsp">Đăng ký</a></p>
   </form>
+
 </div>
+
+<jsp:include page="/WEB-INF/footer.jsp"/>
+
 </body>
 </html>

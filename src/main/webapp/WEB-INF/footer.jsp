@@ -1,10 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: Hi
-  Date: 10/28/2025
-  Time: 8:01 PM
+  Date: 11/20/2025
+  Time: 9:33 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-Đã đăng xuất.
-<a href="products">Quay lại trang chủ</a>
+<div class="footer">
+  <div class="container">
+    © 2025 Demo Shop • Giao diện mô phỏng
+  </div>
+</div>
+

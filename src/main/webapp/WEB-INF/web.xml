@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
-         https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-    <display-name>MySneakerShop</display-name>
+    <display-name>Shop</display-name>
+
+
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>products</welcome-file>
     </welcome-file-list>
-
-    <servlet-mapping>
-        <servlet-name>ProductDetailServlet</servlet-name>
-        <url-pattern>/product-detail</url-pattern>
-    </servlet-mapping>
 </web-app>

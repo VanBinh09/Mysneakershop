@@ -1,37 +1,51 @@
-<%@ page import="com.shop.model.Product" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%
-  Product product = (Product) request.getAttribute("product");
-%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title><%= product != null ? product.getName() : "Chi tiết sản phẩm" %></title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>${product.name}</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-light">
 
-<div class="container py-5">
-  <% if (product == null) { %>
-  <h4 class="text-center text-muted">Không tìm thấy sản phẩm.</h4>
-  <% } else { %>
-  <div class="row justify-content-center align-items-center">
-    <div class="col-md-5 text-center">
-      <img src="images/<%= product.getImage() %>"
-           alt="<%= product.getName() %>"
-           class="img-fluid rounded shadow"
-           style="max-height: 350px; object-fit: cover;">
+<body>
+
+<jsp:include page="/WEB-INF/header.jsp"/>
+
+<div class="container page">
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+    <div class="card-p">
+      <div class="img" style="aspect-ratio:1/1.05">
+        <!-- FIX: luôn load từ /images -->
+        <img src="${pageContext.request.contextPath}/images/${empty product.image ? 'ao-thun.jpg' : product.image}"
+             alt="${product.name}">
+      </div>
     </div>
-    <div class="col-md-6">
-      <h2><%= product.getName() %></h2>
-      <h4 class="text-success"><%= product.getPrice() %> VNĐ</h4>
-      <p class="mt-4"><%= product.getDescription() %></p>
-      <a href="products.jsp" class="btn btn-secondary mt-3">Quay lại</a>
+
+    <div>
+      <h1>${product.name}</h1>
+
+      <div class="price" style="font-size:24px;margin:10px 0">
+        <fmt:formatNumber value="${product.price}"/> VND
+      </div>
+
+      <p style="color:#555">${product.description}</p>
+
+      <div style="margin-top:12px;display:flex;gap:12px">
+        <button class="btn primary">Thêm vào giỏ</button>
+        <a class="btn" href="${pageContext.request.contextPath}/products">Tiếp tục mua sắm</a>
+      </div>
     </div>
+
   </div>
-  <% } %>
+
 </div>
+
+<jsp:include page="/WEB-INF/footer.jsp"/>
 
 </body>
 </html>

@@ -6,62 +6,63 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*,com.shop.model.Product,com.shop.model.User" %>
-
-<%
-    User user = (User) session.getAttribute("username");
-    if (user == null || !"ADMIN".equals(user.getRole())) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-
-    List<Product> products = (List<Product>) request.getAttribute("products");
-%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý sản phẩm</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Quản trị sản phẩm</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-<div class="container mt-4">
-    <h3 class="text-center mb-3">QUẢN LÝ SẢN PHẨM</h3>
-    <a href="product_form.jsp" class="btn btn-success mb-3">+ Thêm sản phẩm</a>
 
-    <table class="table table-bordered text-center align-middle">
-        <thead class="table-dark">
+<body>
+
+<jsp:include page="/WEB-INF/header.jsp"/>
+
+<div class="container page">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2>Danh sách sản phẩm</h2>
+        <a href="${pageContext.request.contextPath}/product_form.jsp" class="btn primary">
+            Thêm sản phẩm
+        </a>
+    </div>
+
+    <table class="table">
+        <thead>
         <tr>
-            <th>ID</th>
-            <th>Tên sản phẩm</th>
-            <th>Đơn giá</th>
-            <th>Ảnh</th>
-            <th>Mô tả</th>
-            <th>Hành động</th>
+            <th>ID</th><th>Tên</th><th>Giá</th><th>Ảnh</th><th>Mô tả</th><th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
-        <% if (products != null && !products.isEmpty()) {
-            for (Product p : products) { %>
-        <tr>
-            <td><%= p.getId() %></td>
-            <td><%= p.getName() %></td>
-            <td><%= String.format("%,.0f VND", p.getPrice()) %></td>
-            <td><img src="images/<%= p.getImage() %>" width="80" height="80" style="object-fit:cover;"></td>
-            <td><%= p.getDescription() %></td>
-            <td>
-                <a href="products?action=edit&id=<%= p.getId() %>" class="btn btn-warning btn-sm">Sửa</a>
-                <a href="products?action=delete&id=<%= p.getId() %>" class="btn btn-danger btn-sm"
-                   onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
-            </td>
-        </tr>
-        <% } } else { %>
-        <tr><td colspan="6" class="text-muted">Chưa có sản phẩm nào.</td></tr>
-        <% } %>
+
+        <c:forEach var="p" items="${products}">
+            <tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td><fmt:formatNumber value="${p.price}"/> VND</td>
+                <td><small>${p.image}</small></td>
+                <td><small>${p.description}</small></td>
+
+                <td>
+                    <a class="btn" href="products?action=edit&id=${p.id}">Sửa</a>
+                    <a class="btn" onclick="return confirm('Xóa sản phẩm này?')"
+                       href="products?action=delete&id=${p.id}">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
+
         </tbody>
     </table>
+
 </div>
+
+<jsp:include page="/WEB-INF/footer.jsp"/>
+
 </body>
 </html>

@@ -56,4 +56,10 @@ INSERT INTO products (name, price, image, description) VALUES
         ('Quần Jean Nam', 320000.00, 'quan-jean.jpg', 'Quần jean slimfit co giãn.');
 
 
+ALTER TABLE users
+    ADD full_name VARCHAR(100),
+    ADD phone      VARCHAR(20),
+    ADD address    VARCHAR(255),
+    ADD birth_date DATE,
+    ADD avatar     VARCHAR(255);
 SELECT * FROM users;

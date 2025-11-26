@@ -1,33 +1,53 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Đăng ký tài khoản</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Đăng ký</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-light">
-<div class="container mt-5" style="max-width: 450px;">
-  <h3 class="text-center mb-4">Đăng ký</h3>
-  <% if (request.getAttribute("error") != null) { %>
-  <div class="alert alert-danger"><%= request.getAttribute("error") %></div>
-  <% } %>
-  <form action="register" method="post">
-    <div class="mb-3">
-      <label class="form-label">Tên đăng nhập</label>
-      <input type="text" name="username" class="form-control" required>
+
+<body>
+
+<jsp:include page="/WEB-INF/header.jsp"/>
+
+<div class="container">
+
+  <form class="form" method="post" action="register">
+
+    <h2>Đăng ký</h2>
+
+    <c:if test="${not empty error}">
+      <div style="color:red">${error}</div>
+    </c:if>
+
+    <c:if test="${param.success == '1'}">
+      <div style="color:green">Tạo tài khoản thành công!</div>
+    </c:if>
+
+    <label>Tài khoản</label>
+    <input type="text" name="username" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Mật khẩu</label>
+    <input type="password" name="password" required>
+
+    <button class="btn primary block">Đăng ký</button>
+
+    <div style="margin-top:8px">
+      Đã có tài khoản?
+      <a href="login.jsp">Đăng nhập</a>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" name="email" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Mật khẩu</label>
-      <input type="password" name="password" class="form-control" required>
-    </div>
-    <button class="btn btn-success w-100">Đăng ký</button>
-    <p class="mt-3 text-center">Đã có tài khoản? <a href="login.jsp">Đăng nhập</a></p>
+
   </form>
+
 </div>
+
+<jsp:include page="/WEB-INF/footer.jsp"/>
+
 </body>
 </html>

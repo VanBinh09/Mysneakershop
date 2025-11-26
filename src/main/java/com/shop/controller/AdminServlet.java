@@ -17,37 +17,49 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        try {
-            dao = new ProductDAO(DBUtil.getConnection());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        dao = new ProductDAO(DBUtil.getConnection());
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+//            throws ServletException, IOException {
+//
+//        HttpSession session = req.getSession();
+//        User user = (User) session.getAttribute("user");
+//
+//
+//        if (user == null || !"admin".equalsIgnoreCase(user.getRole())) {
+//            resp.sendRedirect("login.jsp");
+//            return;
+//        }
+//
+//
+//        List<Product> products = dao.getAllProducts();
+//        req.setAttribute("products", products);
+//
+//
+//        req.getRequestDispatcher("/admin_products.jsp").forward(req, resp);
+//    }
+//
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+//            throws ServletException, IOException {
+//        doGet(req, resp);
+//    }
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException {
 
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
+    HttpSession session = req.getSession(false);
+    User user = (session != null) ? (User) session.getAttribute("user") : null;
 
-
-        if (user == null || !"admin".equalsIgnoreCase(user.getRole())) {
-            resp.sendRedirect("login.jsp");
-            return;
-        }
-
-
-        List<Product> products = dao.getAllProducts();
-        req.setAttribute("products", products);
-
-
-        req.getRequestDispatcher("/admin_products.jsp").forward(req, resp);
+    if (user == null || !"ADMIN".equalsIgnoreCase(user.getRole())) {
+        resp.sendRedirect("login.jsp");
+        return;
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        doGet(req, resp);
-    }
+    List<Product> products = dao.getAllProducts();
+    req.setAttribute("products", products);
+    req.getRequestDispatcher("admin_products.jsp").forward(req, resp);
+}
 }

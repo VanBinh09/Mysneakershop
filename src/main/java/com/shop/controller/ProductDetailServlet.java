@@ -12,41 +12,52 @@ import java.sql.Connection;
 
 @WebServlet(name = "ProductDetailServlet", value = "/product-detail")
 public class ProductDetailServlet extends HttpServlet {
-    private ProductDAO productDAO;
+    private ProductDAO dao;
 
     @Override
     public void init() throws ServletException {
-        // ✅ Kết nối CSDL một lần khi servlet khởi tạo
-        Connection conn = DBUtil.getConnection();
-        productDAO = new ProductDAO(conn);
+        dao = new ProductDAO(DBUtil.getConnection());
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String idParam = req.getParameter("id");
+        String Param = req.getParameter("id");
 
-        if (idParam != null && !idParam.isEmpty()) {
+        if (Param != null && !Param.isEmpty()) {
             try {
-                int id = Integer.parseInt(idParam);
-                Product product = productDAO.getProductById(id);
+                int id = Integer.parseInt(Param);
+                Product p = dao.getProductById(id);
 
-                if (product != null) {
-                    req.setAttribute("product", product);
-
-                    RequestDispatcher dispatcher = req.getRequestDispatcher("product-detail.jsp");
-                    dispatcher.forward(req, resp);
-                } else {
-
+//                if (product != null) {
+//                    req.setAttribute("product", product);
+//
+//                    RequestDispatcher dispatcher = req.getRequestDispatcher("product-detail.jsp");
+//                    dispatcher.forward(req, resp);
+//                } else {
+//
+//                    resp.sendRedirect("products");
+//                }
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//                resp.sendRedirect("products");
+//            }
+//        } else {
+//            resp.sendRedirect("products");
+//        }
+//    }
+                if (p == null) {
                     resp.sendRedirect("products");
+                    return;
                 }
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+
+                req.setAttribute("product", p);
+                req.getRequestDispatcher("product-detail.jsp").forward(req, resp);
+
+            } catch (Exception e) {
                 resp.sendRedirect("products");
             }
-        } else {
-            resp.sendRedirect("products");
         }
     }
 }

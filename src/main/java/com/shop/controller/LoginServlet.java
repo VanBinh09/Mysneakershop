@@ -23,16 +23,25 @@ public class LoginServlet extends HttpServlet {
         UserDAO dao = new UserDAO(conn);
         User user = dao.login(username, password);
 
+//        if (user != null) {
+//            HttpSession session = req.getSession();
+//            session.setAttribute("user", user.getUsername()); // lưu tên người dùng
+//            session.setAttribute("role", user.getRole());      // lưu vai trò (ADMIN / USER)
+//
+//            // Điều hướng theo vai trò
+//            if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+//                resp.sendRedirect("admin_products.jsp"); // trang admin
+//            } else {
+//                resp.sendRedirect("index.jsp"); // trang user
+//            }
         if (user != null) {
             HttpSession session = req.getSession();
-            session.setAttribute("user", user.getUsername()); // lưu tên người dùng
-            session.setAttribute("role", user.getRole());      // lưu vai trò (ADMIN / USER)
+            session.setAttribute("user", user);
 
-            // Điều hướng theo vai trò
             if ("ADMIN".equalsIgnoreCase(user.getRole())) {
-                resp.sendRedirect("admin_products.jsp"); // trang admin
+                resp.sendRedirect("admin");
             } else {
-                resp.sendRedirect("index.jsp"); // trang user
+                resp.sendRedirect("products");
             }
 
         } else {

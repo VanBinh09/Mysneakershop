@@ -13,10 +13,8 @@ public class LogoutSeverlet extends HttpServlet{
                 throws ServletException, IOException {
             HttpSession session = req.getSession(false);
             if (session != null) {
-                session.invalidate();
+                session.invalidate(); // ✅ xóa toàn bộ session
             }
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect(req.getContextPath() + "/products");
         }
-
-
 }
